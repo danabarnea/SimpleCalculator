@@ -10,8 +10,8 @@
 
     <EditText
         android:id="@+id/Num1"
-        android:layout_width="111dp"
-        android:layout_height="66dp"
+        android:layout_width="135dp"
+        android:layout_height="68dp"
         android:layout_marginStart="75dp"
         android:layout_marginTop="40dp"
         android:autofillHints=""
@@ -26,7 +26,6 @@
 
     <EditText
         android:id="@+id/Num2"
-
         android:layout_width="135dp"
         android:layout_height="68dp"
         android:layout_marginEnd="75dp"
@@ -96,14 +95,13 @@
 
     <TextView
         android:id="@+id/tvResult"
-        android:layout_width="83dp"
-        android:layout_height="34dp"
+        android:layout_width="147dp"
+        android:layout_height="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.781" />
+        app:layout_constraintVertical_bias="0.716" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

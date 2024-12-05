@@ -2,6 +2,7 @@ package com.example.simplecalculator;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -46,10 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Cast the String into Integer
         Integer num2 = Integer.valueOf(et2Text);
+        Log.e("num1=", num1.toString());
+        Log.e("num2=", num2.toString());
 
-        Integer result = null;
-        if (view.getId() == R.id.btnPlus)
+         Integer result = null;
+        if (view.getId() == R.id.btnPlus) {
             result = num1 + num2;
+            Log.e("result=",result.toString());
+
+        }
         if (view.getId() == R.id.btnMinus)
             result = num1 - num2;
         if (view.getId() == R.id.btnMult)
@@ -57,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         if (view.getId() == R.id.btnDiv)
             result = num1 / num2;
         if (result != null) {
+            Log.e("show result=", result.toString());
+
             TextView tvRes = findViewById(R.id.tvResult);
             tvRes.setText(result.toString());
         }
