@@ -1,107 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <EditText
-        android:id="@+id/Num1"
-        android:layout_width="135dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="40dp"
-        android:autofillHints=""
-        android:contentDescription=""
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="numberSigned"
-        android:hint="Enter the first number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="LabelFor" />
-
-    <EditText
-        android:id="@+id/Num2"
-        android:layout_width="135dp"
-        android:layout_height="68dp"
-        android:layout_marginEnd="75dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Enter the second number"
-        android:inputType="numberSigned"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="LabelFor,MissingConstraints"
-        tools:layout_editor_absoluteY="40dp" />
-
-    <Button
-        android:id="@+id/btnPlus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:onClick="onBtnClicked"
-        android:text="+"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Num2"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/btnMinus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onBtnClicked"
-        android:text="-"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.317"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/btnMult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onBtnClicked"
-        android:text="*"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/btnDiv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onBtnClicked"
-        android:text=":"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.524"
-        tools:ignore="HardcodedText" />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45sp"
+        android:id="@+id/profileImage"/>
 
     <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="147dp"
-        android:layout_height="67dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.716" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/profileImage"
+        android:layout_marginTop="15sp"
+        android:id="@+id/nameTV"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/nameTV"
+        android:layout_marginTop="15sp"
+        android:id="@+id/mailTv"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/mailTv"
+        android:id="@+id/signIn/>
+</RelativeLayout>
