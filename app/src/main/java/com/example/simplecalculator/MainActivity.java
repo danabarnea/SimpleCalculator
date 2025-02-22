@@ -1,85 +1,106 @@
 package com.example.simplecalculator;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth auth;
+    private GoogleSignInClient googleSignInClient;
+    private ShapeableImageView imageView;
+    private TextView name, mail;
 
-    public class MainActivity extends AppCompatActivity {
-        FirebaseAuth auth;
-        GoogleSignInClient googleSignInClient;
-        ShapeableImageView imageView;
-        TextView name, mail;
-
-        private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-                            try {
-                                GoogleSignInAccount signInAccount = accountTask.getResult(ApiException.class);
-                                AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAccount.getIdToken(), null);
-                                auth.signInWithCredential(authCredential);
-                            } catch (ApiException e) {
-                                e.printStackTrace();
-                            }
+    private final ActivityResultLauncher<Intent> googleSignInLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                    try {
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        if (account != null) {
+                            firebaseAuthWithGoogle(account.getIdToken());
                         }
+                    } catch (ApiException e) {
+                        Toast.makeText(this, "שגיאה בהתחברות: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-        );
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-                auth = FirebaseAuth.getInstance();
-                Glide.with(MainActivity.this).load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl()).into(imageView);
-                name.setText(auth.getCurrentUser().getDisplayName());
-                mail.setText(auth.getCurrentUser().getEmail());
-                Toast.makeText(MainActivity.this, "Signed in successfully", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Failed to sign in: " + task.getException(), Toast.LENGTH_SHORT).show();
-            }
-        }
-    });
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseApp.initializeApp(context: this);
+
+        // אתחול Firebase
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+
+        // חיבור לאלמנטים ב-XML
         imageView = findViewById(R.id.profileImage);
         name = findViewById(R.id.nameTV);
         mail = findViewById(R.id.mailTV);
 
-        GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
+        // הגדרת אפשרויות התחברות עם Google
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id)) // יש לוודא ש-client_id מוגדר נכון
                 .requestEmail()
                 .build();
 
-        googleSignInClient = GoogleSignIn.getClient(@NonNull MainActivity.this, options);
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
-        auth = FirebaseAuth.getInstance();
-
-        SignInButton signInButton = findViewById(R.id.signIn);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = googleSignInClient.getSignInIntent();
-                activityResultLauncher.launch(intent);
-            }
+        // מאזין ללחיצה על כפתור ההתחברות
+        findViewById(R.id.signIn).setOnClickListener(view -> {
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            googleSignInLauncher.launch(signInIntent);
         });
+
+        // לבדוק אם המשתמש כבר מחובר
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            updateUI(user);
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = auth.getCurrentUser();
+                        if (user != null) {
+                            updateUI(user);
+                        }
+                        Toast.makeText(this, "התחברת בהצלחה!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "ההתחברות נכשלה: " + task.getException(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        Glide.with(this).load(user.getPhotoUrl()).into(imageView);
+        name.setText(user.getDisplayName());
+        mail.setText(user.getEmail());
     }
 }
