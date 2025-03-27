@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         // הגדרת אפשרויות התחברות עם Google
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id)) // יש לוודא ש-client_id מוגדר נכון
+                .requestIdToken(getString(R.string.cilent_id)) // יש לוודא ש-client_id מוגדר נכון
                 .requestEmail()
                 .build();
 
