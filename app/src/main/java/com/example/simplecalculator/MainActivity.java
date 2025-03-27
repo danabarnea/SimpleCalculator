@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         // חיבור לאלמנטים ב-XML
         imageView = findViewById(R.id.profileImage);
         name = findViewById(R.id.nameTV);
-        mail = findViewById(R.id.mailTV);
+        mail = findViewById(R.id.mailTv);
 
         // הגדרת אפשרויות התחברות עם Google
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

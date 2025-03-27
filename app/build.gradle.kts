@@ -44,4 +44,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.google.android.gms:play-services-auth:21.3.0")
+    implementation ("androidx.activity:activity:1.8.0")
+    implementation ("androidx.fragment:fragment:1.6.1")
 }
