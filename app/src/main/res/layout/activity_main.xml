@@ -6,33 +6,131 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- תצוגת תמונת פרופיל -->
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:id="@+id/profileImage"/>
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
 
+    <!-- שם המשתמש -->
     <TextView
+        android:id="@+id/nameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/profileImage"
-        android:layout_marginTop="15dp"
-        android:id="@+id/nameTV"/>
+        android:layout_marginTop="10dp" />
 
+    <!-- כתובת מייל -->
     <TextView
+        android:id="@+id/mailTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/nameTV"
-        android:layout_marginTop="15dp"
-        android:id="@+id/mailTv"/>
+        android:layout_marginTop="10dp" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <!-- תוצאת החישוב -->
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="תוצאה: "
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/mailTv"
-        android:id="@+id/signIn"/>
+        android:layout_below="@id/mailTV" />
+
+    <!-- שדה מספר ראשון -->
+    <TextView
+        android:id="@+id/labelNum1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Number:"
+        android:layout_below="@id/resultTextView"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/Num1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/labelNum1"
+        android:hint="Enter first number"
+        android:inputType="numberDecimal"
+        android:gravity="center" />
+
+    <!-- שדה מספר שני -->
+    <TextView
+        android:id="@+id/labelNum2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Second Number:"
+        android:layout_below="@id/Num1"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/Num2"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/labelNum2"
+        android:hint="Enter second number"
+        android:inputType="numberDecimal"
+        android:gravity="center" />
+
+    <!-- כפתורי הפעולה -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Num2"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/btnMinus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/btnMult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/btnDiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/" />
+    </LinearLayout>
+
+    <!-- כפתור התחברות -->
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnDiv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <!-- כפתור התנתקות -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signIn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Sign Out" />
+
 </RelativeLayout>
